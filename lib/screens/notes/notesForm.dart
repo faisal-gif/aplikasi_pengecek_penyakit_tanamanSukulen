@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:quiz_app/models/notes.dart';
 
-
 class notesForm extends StatefulWidget {
   final Notes notes;
 
@@ -17,7 +16,6 @@ class notesFormState extends State<notesForm> {
   notesFormState(this.notes);
   TextEditingController judulController = TextEditingController();
   TextEditingController isiController = TextEditingController();
-  
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +34,6 @@ class notesFormState extends State<notesForm> {
           padding: EdgeInsets.only(top: 15.0, left: 10.0, right: 10.0),
           child: ListView(
             children: <Widget>[
-             
               // nama
               Padding(
                 padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
@@ -59,7 +56,9 @@ class notesFormState extends State<notesForm> {
                 padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
                 child: TextField(
                   controller: isiController,
-                  keyboardType: TextInputType.text,
+                  minLines: 6,
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
                   decoration: InputDecoration(
                     labelText: 'Isi',
                     border: OutlineInputBorder(
@@ -89,14 +88,13 @@ class notesFormState extends State<notesForm> {
                           if (notes == null) {
                             // tambah data
                             notes = Notes(
-                                judulController.text,
-                                isiController.text,
-                                );
+                              judulController.text,
+                              isiController.text,
+                            );
                           } else {
                             // ubah data
                             notes.judul = judulController.text;
                             notes.isi = isiController.text;
-                            
                           }
                           // kembali ke layar sebelumnya dengan membawa objek item
                           Navigator.pop(context, notes);

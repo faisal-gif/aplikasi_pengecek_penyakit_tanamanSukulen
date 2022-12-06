@@ -27,6 +27,8 @@ class QuestionCard extends StatelessWidget {
       ),
       child: Column(
         children: [
+          Image.asset(question.gambar,width: 150,height: 150,),
+          SizedBox(height: 5,),
           Text(
             question.question,
             style: Theme.of(context)

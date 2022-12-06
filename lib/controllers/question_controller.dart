@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import 'package:quiz_app/models/Questions.dart';
 import 'package:quiz_app/screens/score/score_screen.dart';
+import 'package:quiz_app/models/Hasil.dart';
 
 // We use get package for our state management
 
@@ -26,7 +27,8 @@ class QuestionController extends GetxController
             options: question['options'],
             answer: question['answer_index'],
             jenis: question['jenis'],
-            penanganan : question['penanganan']),
+            penanganan: question['penanganan'],
+            gambar: question['gambar']),
       )
       .toList();
   List<Question> get questions => this._questions;
@@ -51,6 +53,14 @@ class QuestionController extends GetxController
   List<String> get jenis => this._jenis;
   List<String> _penanganan = [];
   List<String> get penanganan => this._penanganan;
+  List<String> _gambar = [];
+  List<String> get gambar => this._gambar;
+  List<int> _jml = [];
+  List<int> get jml => this._jml;
+  int _angka = 0;
+  int get angka => this._angka;
+  List<Hasil> _hasil = List<Hasil>();
+  List<Hasil> get hasil => this._hasil;
   // called immediately after the widget is allocated memory
   @override
   void onInit() {
@@ -85,8 +95,25 @@ class QuestionController extends GetxController
     _correctAns = question.answer;
     _selectedAns = selectedIndex;
     if (_correctAns == _selectedAns) {
-      jenis.add(question.jenis);
-      penanganan.add(question.penanganan);
+      var contain = jenis.contains(question.jenis);
+      if (!contain) {
+        jenis.add(question.jenis);
+        hasil.add(
+            Hasil(question.jenis, question.penanganan, question.gambar, 1));
+      } else {
+        if (jenis.contains(question.jenis)) {
+          final ad = hasil.where((element) => element.jenis == question.jenis);
+          for (final x in ad) {
+            _angka = x.jumlah;
+          }
+          _angka++;
+          hasil[hasil
+                  .indexWhere((element) => element.jenis == question.jenis)] =
+              Hasil(
+                  question.jenis, question.penanganan, question.gambar, _angka);
+        }
+      }
+      hasil.sort((a, b) => b.jumlah.compareTo(a.jumlah),);
     }
     _animationController.stop();
     update();

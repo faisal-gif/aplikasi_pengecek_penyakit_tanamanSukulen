@@ -34,16 +34,66 @@ class ScoreScreen extends StatelessWidget {
             )),
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-              child: ListView.builder(
-                itemCount: _qnController.penanganan.length,
-                itemBuilder: (context, index) {
-                  return Card(
-                    child: ListTile(
-                      title: Text('${_qnController.jenis[index]}'),
-                      subtitle: Text('${_qnController.penanganan[index]}'),
+              child: Card(
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(
+                      height: 10,
                     ),
-                  );
-                },
+                    Text("Kesimpulan dari pengecekan tanaman"),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text("Kemungkinan tanaman anda terkena hama / penyakit"),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Image.asset(
+                      '${_qnController.hasil[0].gambar}',
+                      width: 150,
+                      height: 150,
+                    ),
+                    ListTile(
+                      title: Text('${_qnController.hasil[0].jenis}'),
+                      subtitle: Text('${_qnController.hasil[0].penanganan}'),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Padding(
+                      child: Text(
+                          "Kemungkinan Tanaman Anda Juga Terkena Hama / Penyakit "),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+                    ),
+                    Expanded(
+                        child: Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+                      child: ListView.builder(
+                          itemCount: _qnController.hasil.length,
+                          itemBuilder: (context, index) {
+                            return Row(
+                              children: <Widget>[
+                                Expanded(
+                                    child: Text(_qnController.hasil[index].jenis
+                                        .toString())),
+                                Text(" dengan"),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(_qnController.hasil[index].jumlah
+                                    .toString()),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text("Gejala"),
+                              ],
+                            );
+                          }),
+                    )),
+                  ],
+                ),
               ),
             )));
   }
